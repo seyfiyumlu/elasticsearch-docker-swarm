@@ -28,7 +28,7 @@ version: "3.7"
 
 services:
   coordination:
-    image: docker.elastic.co/elasticsearch/elasticsearch:6.7.2
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.5.2
     healthcheck:
       test: curl -fs http://localhost:9200/_cat/health || exit 1
       interval: 30s
@@ -56,7 +56,7 @@ services:
           memory: 4G
 
   master1:
-    image: docker.elastic.co/elasticsearch/elasticsearch:6.7.2
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.5.2
     healthcheck:
       test: curl -fs http://localhost:9200/_cat/health || exit 1
       interval: 30s
@@ -73,8 +73,6 @@ services:
     volumes:
       - esmaster1:/usr/share/elasticsearch/data
     deploy:
-      placement:
-        constraints: [ node.hostname == node-1 ]
       endpoint_mode: dnsrr
       mode: "replicated"
       replicas: 1
@@ -83,7 +81,7 @@ services:
           memory: 4G
 
   master2:
-    image: docker.elastic.co/elasticsearch/elasticsearch:6.7.2
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.5.2
     healthcheck:
       test: curl -fs http://localhost:9200/_cat/health || exit 1
       interval: 30s
@@ -100,8 +98,6 @@ services:
     volumes:
       - esmaster2:/usr/share/elasticsearch/data
     deploy:
-      placement:
-        constraints: [ node.hostname == node-2 ]
       endpoint_mode: dnsrr
       mode: "replicated"
       replicas: 1
@@ -110,7 +106,7 @@ services:
           memory: 4G
 
   master3:
-    image: docker.elastic.co/elasticsearch/elasticsearch:6.7.2
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.5.2
     healthcheck:
       test: curl -fs http://localhost:9200/_cat/health || exit 1
       interval: 30s
@@ -127,8 +123,6 @@ services:
     volumes:
       - esmaster3:/usr/share/elasticsearch/data
     deploy:
-      placement:
-        constraints: [ node.hostname == node-3 ]
       endpoint_mode: dnsrr
       mode: "replicated"
       replicas: 1
@@ -137,7 +131,7 @@ services:
           memory: 4G
 
   data1:
-    image: docker.elastic.co/elasticsearch/elasticsearch:6.7.2
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.5.2
     healthcheck:
       test: curl -fs http://localhost:9200/_cat/health || exit 1
       interval: 30s
@@ -154,8 +148,6 @@ services:
     volumes:
       - esdata1:/usr/share/elasticsearch/data
     deploy:
-      placement:
-        constraints: [ node.hostname == node-1 ]
       endpoint_mode: dnsrr
       mode: "replicated"
       replicas: 1
@@ -163,7 +155,7 @@ services:
         limits:
           memory: 6G
   data2:
-    image: docker.elastic.co/elasticsearch/elasticsearch:6.7.2
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.5.2
     healthcheck:
       test: curl -fs http://localhost:9200/_cat/health || exit 1
       interval: 30s
@@ -180,8 +172,6 @@ services:
     volumes:
       - esdata2:/usr/share/elasticsearch/data
     deploy:
-      placement:
-        constraints: [ node.hostname == node-2 ]
       endpoint_mode: dnsrr
       mode: "replicated"
       replicas: 1
@@ -189,7 +179,7 @@ services:
         limits:
           memory: 6G
   data3:
-    image: docker.elastic.co/elasticsearch/elasticsearch:6.7.2
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.5.2
     healthcheck:
       test: curl -fs http://localhost:9200/_cat/health || exit 1
       interval: 30s
@@ -206,8 +196,6 @@ services:
     volumes:
       - esdata3:/usr/share/elasticsearch/data
     deploy:
-      placement:
-        constraints: [ node.hostname == node-3 ]
       endpoint_mode: dnsrr
       mode: "replicated"
       replicas: 1
@@ -215,7 +203,7 @@ services:
         limits:
           memory: 4G
   data4:
-    image: docker.elastic.co/elasticsearch/elasticsearch:6.7.2
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.5.2
     healthcheck:
       test: curl -fs http://localhost:9200/_cat/health || exit 1
       interval: 30s
@@ -232,8 +220,6 @@ services:
     volumes:
       - esdata4:/usr/share/elasticsearch/data
     deploy:
-      placement:
-        constraints: [ node.hostname == node-4 ]
       endpoint_mode: dnsrr
       mode: "replicated"
       replicas: 1
@@ -242,7 +228,7 @@ services:
           memory: 6G
 
   kibana:
-    image: docker.elastic.co/kibana/kibana:6.7.2
+    image: docker.elastic.co/kibana/kibana:7.5.2
     environment:
       - "ELASTICSEARCH_URL=http://data1:9200"
     networks:
@@ -303,8 +289,6 @@ services:
       - --logLevel=INFO
       - --accessLog
     deploy:
-      placement:
-        constraints: [ node.hostname == node-1 ]
       mode: replicated
       replicas: 1
       restart_policy:
